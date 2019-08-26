@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>KABU</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+
+        @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+        body{
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: normal;
+            margin:0;
+        }
+        #nav{
+            height:50px;
+            position:fixed;
+            top:0;
+            width:100%;
+            background:white;
+            border-bottom:1px solid #bababa;
+        }
+        #main{
+            margin:0 8px 8px;
+            padding-top:50px;
+        }
+        #count-down{
+            color: #B50033;
+            padding: 0 20%;
+            text-align: right;
+            margin: 0;
+        }
+        .mid-text{
+            margin:30px 8px;
+        }
+        .center{
+            text-align:center
+        }
+        img{
+            padding: 20px 22.5%;
+            width: 55%
+        }
+        h5{
+            font-size: 20px;
+            font-weight: normal;
+            line-height:50px;
+            color: #B50033;
+            margin:0;
+        }
+        p{
+            font-size:15px;
+            margin:auto 4px;
+            line-height:1.2;
+        }
+
+        .bottom-text{
+            margin-top:40px
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.15/dayjs.min.js"></script>
+</head>
+<body id="app">
+<div id="nav">
+    <div class="arrow-left"></div>
+    <h5 class="center">會員認證</h5>
+</div>
+<div id="main">
+    <p id="top-text" class="center">請向店員出示此QR CODE以認證會員身份</p>
+    <div class="center" id="qrcode"></div>
+    <p id="count-down">30</p>
+    <p class="mid-text">會員於一天內每個時段(12nn-2:59pm/3:00-5:59pm/6:00-8:59pm/9:00-closed)最多可使用KABU PASS各一次(一天合共四次)，每次可享用折扣優惠一次、電子割引券一張及積分換領食品一項。一切以系統為準。</p>
+    <p id="bottom-text" class="center">更多條款及細則</p>
+</div>
+
+<script type="text/javascript">
+  let id= new URLSearchParams(window.location.search).get('id');
+  new QRCode(document.getElementById("qrcode"), {
+    text: id+dayjs().format('YYYYMMDDHHmmss')+'0000',
+    // width: 128,
+    // height: 128,
+    correctLevel : 1
+  });
+  let countDown = 30;
+  setInterval(()=>{
+    document.getElementById("count-down").innerHTML= countDown;
+    if(countDown<=0)
+      window.location.reload()
+    countDown--;
+  },1000)
+</script>
+</body>
